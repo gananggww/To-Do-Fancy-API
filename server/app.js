@@ -15,10 +15,12 @@ app.use(bodyParser.json())
 
 const todos = require("./router/todos")
 const users = require("./router/users")
-
+const login = require("./router/logins")
 
 app.use('/users', users)
 app.use('/todos', todos)
+app.use('/', login)
+
 
 
 app.listen(3000)
