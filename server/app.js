@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/todo', (err)=>{
   if(err){
@@ -9,6 +10,9 @@ mongoose.connect('mongodb://localhost/todo', (err)=>{
     console.log("database conected");
   }
 });
+
+
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

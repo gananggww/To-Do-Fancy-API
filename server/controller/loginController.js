@@ -1,19 +1,27 @@
 const ObjectId = require("mongodb").ObjectId
 const modelUsers = require("../model/users")
+const jwt = require('jsonwebtoken');
+const FB = require('fb');
+const fb = new FB.Facebook({version: 'v2.8'});
+
 
 const login = (req, res)=>{
+  // console.log(req);
   modelUsers.findOne({username : req.body.username})
   .then(row=>{
+    // console.log(row);
     if(row.password == req.body.password) {
       var token = jwt.sign({ id: row._id, username : row.username }, 'shhhhh');
-      res.send(token)
+      res.send({token : token, username : row.username})
+      // res.send("berhasil")
     }
     else{
-      res.send("password salah")
+      res.send({token : null})
     }
   })
   .catch(err=>{
-    res.send("username tidak ditemukan")
+    // console.log(err);
+    res.send({token : null})
   })
 }
 

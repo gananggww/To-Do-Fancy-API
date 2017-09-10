@@ -3,7 +3,7 @@ const modelUsers = require("../model/users")
 const jwt = require('jsonwebtoken');
 
 const getAll = (req, res)=>{
- modelUsers.find()
+ modelUsers.find().populate('todos')
  .then(rows=>{
    res.send(rows)
  })
@@ -11,7 +11,6 @@ const getAll = (req, res)=>{
    res.send(err)
  })
 }
-
 
 const remove = (req, res)=>{
   if(req.headers.token == null){
@@ -30,6 +29,16 @@ const remove = (req, res)=>{
     }
   }
 }
+// const remove = (req, res)=>{
+//   modelUsers.remove({_id: ObjectId(req.params.id)})
+//   .then(()=>{
+//     res.send("Berhasil menghapus")
+//   })
+//   .catch(err=>{
+//     res.send("Gagal menghapus")
+//   })
+// }
+
 
 const edit = (req, res)=>{
   if(req.headers.token == null){
