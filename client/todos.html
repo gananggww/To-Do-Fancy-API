@@ -14,6 +14,13 @@
       }
     </style>
     <title></title>
+
+    <script>
+      if(localStorage.getItem('token') == null)
+      {
+        window.location.href = "index.html"
+      }
+    </script>
   </head>
   <body>
     <div id="app">
@@ -23,7 +30,7 @@
         </a>
         <div class="right menu">
           <div class="item">
-              <div class="ui primary button">Log Out</div>
+              <div @click="getLogout" class="ui primary button">Log Out</div>
           </div>
         </div>
       </div>

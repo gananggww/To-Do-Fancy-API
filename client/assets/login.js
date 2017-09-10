@@ -18,6 +18,10 @@ const app = new Vue({
     selected:[]
   },
   methods: {
+    getLogout () {
+      localStorage.removeItem("token")
+      window.location.href = "index.html"
+    },
     getLogin () {
       // console.log(this.username);
       var self = this.login
@@ -51,26 +55,24 @@ const app = new Vue({
         console.log(err);
       })
     },
-    getlist () {
-      if (localStorage.getItem('token') == null) {
-        // window.location.href = 'http://127.0.0.1:8080'
+    validate () {
 
-      } else {
-        var self = this
-        // console.log(config);
-        axios.get(`http://localhost:3000/todos`, {
-          headers: {
-            token: localStorage.getItem('token')
-          }
-        })
-        .then(response=>{
-          console.log(response.data);
-          self.showlist = response.data
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-      }
+    },
+    getlist () {
+      var self = this
+      // console.log(config);
+      axios.get(`http://localhost:3000/todos`, {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(response=>{
+        console.log(response.data);
+        self.showlist = response.data
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     },
     doAdd () {
       var self = this
@@ -129,7 +131,10 @@ const app = new Vue({
     // }
   },
   mounted () {
-    this.getlist()
-    // this.doEdit()
+    if (localStorage.getItem('token') == null && window.location.pathname == 'todos.html') {
+      this.getLogin()
+    } else {
+      this.getlist()
+    }
   }
 })
